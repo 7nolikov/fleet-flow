@@ -82,35 +82,40 @@
             </div>
           </div>
           <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              var mainImage = document.getElementById('main-car-image');
-              var thumbnails = document.querySelectorAll('.thumbnail-btn');
-              
-              if (!mainImage) {
-                console.error('Main image not found');
-                return;
+            (function() {
+              function initGallery() {
+                var mainImage = document.getElementById('main-car-image');
+                var thumbnails = document.querySelectorAll('.thumbnail-btn');
+                
+                if (!mainImage || thumbnails.length === 0) {
+                  return;
+                }
+                
+                thumbnails.forEach(function(btn) {
+                  btn.onclick = function(e) {
+                    e.preventDefault();
+                    var fullImage = this.dataset.fullImage;
+                    if (fullImage && mainImage) {
+                      mainImage.src = fullImage;
+                      // Update active state
+                      thumbnails.forEach(function(t) {
+                        t.classList.remove('border-primary-500');
+                        t.classList.add('border-transparent');
+                      });
+                      this.classList.remove('border-transparent');
+                      this.classList.add('border-primary-500');
+                    }
+                  };
+                });
               }
               
-              thumbnails.forEach(function(btn) {
-                btn.addEventListener('click', function(e) {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  var fullImage = this.getAttribute('data-full-image');
-                  if (fullImage) {
-                    // Decode HTML entities if needed
-                    var decoded = fullImage.replace(/&amp;/g, '&');
-                    mainImage.src = decoded;
-                    // Update active state
-                    thumbnails.forEach(function(t) {
-                      t.classList.remove('border-primary-500');
-                      t.classList.add('border-transparent');
-                    });
-                    this.classList.remove('border-transparent');
-                    this.classList.add('border-primary-500');
-                  }
-                });
-              });
-            });
+              // Run immediately since script is after the elements
+              initGallery();
+              // Also run on DOMContentLoaded as fallback
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initGallery);
+              }
+            })();
           </script>
           {{ end }}
         </div>
