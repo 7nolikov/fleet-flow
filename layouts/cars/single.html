@@ -1,25 +1,25 @@
 {{ define "main" }}
-<article class="section pt-8 bg-slate-50">
-  <div class="container">
+<article class="section pt-4 sm:pt-8 bg-slate-50">
+  <div class="container px-4 sm:px-6">
     <!-- Breadcrumb -->
-    <nav class="mb-8">
-      <ol class="flex items-center space-x-2 text-sm">
+    <nav class="mb-4 sm:mb-8 overflow-x-auto">
+      <ol class="flex items-center space-x-2 text-xs sm:text-sm whitespace-nowrap">
         <li>
-          <a href="/" class="text-slate-500 hover:text-primary-600 transition-colors">Home</a>
+          <a href="{{ .Site.BaseURL }}" class="text-slate-500 hover:text-primary-600 transition-colors">Home</a>
         </li>
         <li class="text-slate-300">/</li>
         <li>
-          <a href="/cars/" class="text-slate-500 hover:text-primary-600 transition-colors">Our Fleet</a>
+          <a href="{{ "cars/" | relURL }}" class="text-slate-500 hover:text-primary-600 transition-colors">Our Fleet</a>
         </li>
         <li class="text-slate-300">/</li>
-        <li class="text-slate-900 font-medium">{{ .Params.make }} {{ .Params.model }}</li>
+        <li class="text-slate-900 font-medium truncate max-w-[150px] sm:max-w-none">{{ .Params.make }} {{ .Params.model }}</li>
       </ol>
     </nav>
 
     <!-- Main Content Grid -->
-    <div class="grid lg:grid-cols-3 gap-8">
+    <div class="grid lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
       <!-- Left Column: Images & Description -->
-      <div class="lg:col-span-2 space-y-8">
+      <div class="lg:col-span-2 space-y-4 sm:space-y-6 lg:space-y-8">
         <!-- Image Gallery -->
         <div class="card overflow-hidden">
           {{ $images := .Params.images }}
@@ -30,11 +30,14 @@
             {{ if $featuredImage }}
             <img id="main-car-image" 
                  src="{{ $featuredImage }}" 
+                 srcset="{{ replace $featuredImage "w=800" "w=400" }} 400w, {{ $featuredImage }} 800w, {{ replace $featuredImage "w=800" "w=1200" }} 1200w"
+                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 800px"
                  alt="{{ .Params.make }} {{ .Params.model }}"
+                 fetchpriority="high"
                  class="w-full h-full object-cover">
             {{ else }}
             <div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-              <svg class="w-24 h-24 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-16 h-16 sm:w-24 sm:h-24 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M8 17v-4m8 4v-4m-8 4H4a1 1 0 01-1-1v-2a1 1 0 011-1h1m12 4h4a1 1 0 001-1v-2a1 1 0 00-1-1h-1M5 9V7a2 2 0 012-2h10a2 2 0 012 2v2M5 9h14M5 9l1-4h12l1 4"/>
               </svg>
             </div>
@@ -42,18 +45,20 @@
             
             <!-- Availability Badge -->
             {{ if .Params.available }}
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-green-500 text-white shadow-lg">
-                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <div class="absolute top-3 left-3 sm:top-4 sm:left-4 flex gap-1.5 sm:gap-2">
+              <span class="inline-flex items-center px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold bg-green-500 text-white shadow-lg">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
-                Available Now
+                <span class="hidden sm:inline">Available Now</span>
+                <span class="sm:hidden">Available</span>
               </span>
             </div>
             {{ else }}
-            <div class="absolute top-4 left-4">
-              <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-slate-500 text-white shadow-lg">
-                Currently Unavailable
+            <div class="absolute top-3 left-3 sm:top-4 sm:left-4">
+              <span class="inline-flex items-center px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-500 text-white shadow-lg">
+                <span class="hidden sm:inline">Currently Unavailable</span>
+                <span class="sm:hidden">Unavailable</span>
               </span>
             </div>
             {{ end }}
@@ -61,12 +66,16 @@
 
           <!-- Thumbnail Gallery -->
           {{ if $images }}
-          <div class="p-4 bg-slate-50 border-t border-slate-100">
-            <div class="flex gap-3 overflow-x-auto pb-2">
+          <div class="p-3 sm:p-4 bg-slate-50 border-t border-slate-100">
+            <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory">
               {{ range $index, $image := $images }}
               <button onclick="document.getElementById('main-car-image').src='{{ $image }}'" 
-                      class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-500 focus:border-primary-500 transition-colors focus:outline-none">
-                <img src="{{ $image }}" alt="View {{ $index | add 1 }}" class="w-full h-full object-cover">
+                      class="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-500 focus:border-primary-500 transition-colors focus:outline-none snap-start">
+                <img src="{{ replace $image "w=800" "w=200" }}" 
+                     alt="View {{ $index | add 1 }}" 
+                     loading="lazy"
+                     decoding="async"
+                     class="w-full h-full object-cover">
               </button>
               {{ end }}
             </div>
@@ -75,11 +84,11 @@
         </div>
 
         <!-- Description -->
-        <div class="card p-8">
-          <h2 class="text-2xl font-bold font-heading text-slate-900 mb-6">About This Vehicle</h2>
-          <div class="prose prose-slate prose-lg max-w-none">
+        <div class="card p-4 sm:p-6 lg:p-8">
+          <h2 class="text-xl sm:text-2xl font-bold font-heading text-slate-900 mb-4 sm:mb-6">About This Vehicle</h2>
+          <div class="prose prose-slate prose-sm sm:prose-lg max-w-none">
             {{ if .Params.description }}
-            <p class="text-slate-600 leading-relaxed">{{ .Params.description }}</p>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">{{ .Params.description }}</p>
             {{ end }}
             {{ .Content }}
           </div>
@@ -87,13 +96,13 @@
 
         <!-- Features List -->
         {{ if .Params.features }}
-        <div class="card p-8">
-          <h2 class="text-2xl font-bold font-heading text-slate-900 mb-6">Features & Amenities</h2>
-          <div class="grid sm:grid-cols-2 gap-4">
+        <div class="card p-4 sm:p-6 lg:p-8">
+          <h2 class="text-xl sm:text-2xl font-bold font-heading text-slate-900 mb-4 sm:mb-6">Features & Amenities</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {{ range .Params.features }}
-            <div class="flex items-center text-slate-700">
-              <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+            <div class="flex items-center text-slate-700 text-sm sm:text-base">
+              <div class="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-lg flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
               </div>
@@ -107,72 +116,72 @@
 
       <!-- Right Column: Booking Card -->
       <div class="lg:col-span-1">
-        <div class="sticky top-24 space-y-6">
+        <div class="lg:sticky lg:top-24 space-y-4 sm:space-y-6">
           <!-- Booking Card -->
-          <div class="card p-6">
+          <div class="card p-4 sm:p-6">
             <!-- Title & Price -->
-            <div class="mb-6">
-              <h1 class="text-2xl font-bold font-heading text-slate-900">
+            <div class="mb-4 sm:mb-6">
+              <h1 class="text-xl sm:text-2xl font-bold font-heading text-slate-900">
                 {{ .Params.make }} {{ .Params.model }}
               </h1>
-              <p class="text-slate-500">{{ .Params.year }} · {{ .Params.color }}</p>
+              <p class="text-sm sm:text-base text-slate-500">{{ .Params.year }} · {{ .Params.color }}</p>
               
-              <div class="mt-4 flex items-baseline">
-                <span class="text-4xl font-bold text-primary-600">
+              <div class="mt-3 sm:mt-4 flex items-baseline">
+                <span class="text-3xl sm:text-4xl font-bold text-primary-600">
                   {{ site.Params.cars.currency_symbol }}{{ .Params.price_per_day }}
                 </span>
-                <span class="ml-2 text-slate-500">/day</span>
+                <span class="ml-1.5 sm:ml-2 text-sm sm:text-base text-slate-500">/day</span>
               </div>
               
               {{ if .Params.deposit }}
-              <p class="mt-2 text-sm text-slate-500">
+              <p class="mt-1.5 sm:mt-2 text-xs sm:text-sm text-slate-500">
                 Security deposit: {{ site.Params.cars.currency_symbol }}{{ .Params.deposit }}
               </p>
               {{ end }}
             </div>
 
             <!-- Quick Specs -->
-            <div class="grid grid-cols-2 gap-3 mb-6">
-              <div class="bg-slate-50 rounded-xl p-4 text-center">
-                <svg class="w-6 h-6 text-primary-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <div class="bg-slate-50 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 mx-auto mb-1.5 sm:mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
                 </svg>
-                <p class="text-sm font-medium text-slate-900">{{ index .Params.transmissions 0 | title }}</p>
-                <p class="text-xs text-slate-500">Transmission</p>
+                <p class="text-xs sm:text-sm font-medium text-slate-900">{{ index .Params.transmissions 0 | title }}</p>
+                <p class="text-[10px] sm:text-xs text-slate-500">Transmission</p>
               </div>
               
-              <div class="bg-slate-50 rounded-xl p-4 text-center">
-                <svg class="w-6 h-6 text-primary-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="bg-slate-50 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 mx-auto mb-1.5 sm:mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                 </svg>
-                <p class="text-sm font-medium text-slate-900">{{ .Params.seats }} Seats</p>
-                <p class="text-xs text-slate-500">Capacity</p>
+                <p class="text-xs sm:text-sm font-medium text-slate-900">{{ .Params.seats }} Seats</p>
+                <p class="text-[10px] sm:text-xs text-slate-500">Capacity</p>
               </div>
               
-              <div class="bg-slate-50 rounded-xl p-4 text-center">
-                <svg class="w-6 h-6 text-primary-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="bg-slate-50 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 mx-auto mb-1.5 sm:mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                 </svg>
-                <p class="text-sm font-medium text-slate-900">{{ index .Params.fuel_types 0 | title }}</p>
-                <p class="text-xs text-slate-500">Fuel Type</p>
+                <p class="text-xs sm:text-sm font-medium text-slate-900">{{ index .Params.fuel_types 0 | title }}</p>
+                <p class="text-[10px] sm:text-xs text-slate-500">Fuel Type</p>
               </div>
               
-              <div class="bg-slate-50 rounded-xl p-4 text-center">
-                <svg class="w-6 h-6 text-primary-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="bg-slate-50 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 mx-auto mb-1.5 sm:mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                 </svg>
-                <p class="text-sm font-medium text-slate-900">{{ .Params.doors }} Doors</p>
-                <p class="text-xs text-slate-500">Access</p>
+                <p class="text-xs sm:text-sm font-medium text-slate-900">{{ .Params.doors }} Doors</p>
+                <p class="text-[10px] sm:text-xs text-slate-500">Access</p>
               </div>
             </div>
 
             <!-- Payment Info Banner -->
-            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
+            <div class="bg-amber-50 border border-amber-200 rounded-lg sm:rounded-xl p-3 sm:p-4 mb-4">
               <div class="flex items-center">
-                <span class="text-2xl mr-3">💵</span>
+                <span class="text-xl sm:text-2xl mr-2 sm:mr-3">💵</span>
                 <div>
-                  <p class="font-semibold text-amber-800">{{ site.Params.payment.title }}</p>
-                  <p class="text-sm text-amber-700">{{ site.Params.payment.message }}</p>
+                  <p class="text-sm sm:text-base font-semibold text-amber-800">{{ site.Params.payment.title }}</p>
+                  <p class="text-xs sm:text-sm text-amber-700">{{ site.Params.payment.message }}</p>
                 </div>
               </div>
             </div>
@@ -183,16 +192,16 @@
               <a href="{{ .Params.cal_link }}" 
                  target="_blank"
                  rel="noopener noreferrer"
-                 class="w-full inline-flex items-center justify-center px-6 py-4 bg-primary-600 hover:bg-primary-700 text-white text-lg font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 class="w-full inline-flex items-center justify-center px-4 py-3 sm:px-6 sm:py-4 bg-primary-600 hover:bg-primary-700 text-white text-base sm:text-lg font-semibold rounded-lg sm:rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
                 Schedule Pickup
               </a>
               {{ else }}
-              <a href="/contact/" 
-                 class="w-full inline-flex items-center justify-center px-6 py-4 bg-primary-600 hover:bg-primary-700 text-white text-lg font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="{{ "contact/" | relURL }}" 
+                 class="w-full inline-flex items-center justify-center px-4 py-3 sm:px-6 sm:py-4 bg-primary-600 hover:bg-primary-700 text-white text-base sm:text-lg font-semibold rounded-lg sm:rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
                 Contact to Book
@@ -200,60 +209,60 @@
               {{ end }}
             {{ else }}
             <button disabled 
-                    class="w-full inline-flex items-center justify-center px-6 py-4 bg-slate-200 text-slate-500 text-lg font-semibold rounded-xl cursor-not-allowed">
+                    class="w-full inline-flex items-center justify-center px-4 py-3 sm:px-6 sm:py-4 bg-slate-200 text-slate-500 text-base sm:text-lg font-semibold rounded-lg sm:rounded-xl cursor-not-allowed">
               Currently Unavailable
             </button>
             {{ end }}
 
             <!-- Contact Info -->
-            <div class="mt-6 pt-6 border-t border-slate-100">
-              <p class="text-sm text-slate-600 text-center">
+            <div class="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-slate-100">
+              <p class="text-xs sm:text-sm text-slate-600 text-center">
                 Questions? Call us at 
-                <a href="tel:{{ site.Params.phone }}" class="text-primary-600 hover:underline font-medium">
-                  {{ site.Params.phone }}
+                <a href="tel:{{ site.Params.contact.phone }}" class="text-primary-600 hover:underline font-medium">
+                  {{ site.Params.contact.phone }}
                 </a>
               </p>
             </div>
           </div>
 
           <!-- Full Specifications -->
-          <div class="card p-6">
-            <h3 class="text-lg font-bold font-heading text-slate-900 mb-4">Full Specifications</h3>
-            <dl class="space-y-3">
-              <div class="flex justify-between py-2 border-b border-slate-100">
+          <div class="card p-4 sm:p-6">
+            <h3 class="text-base sm:text-lg font-bold font-heading text-slate-900 mb-3 sm:mb-4">Full Specifications</h3>
+            <dl class="space-y-2 sm:space-y-3 text-sm">
+              <div class="flex justify-between py-1.5 sm:py-2 border-b border-slate-100">
                 <dt class="text-slate-500">Make</dt>
                 <dd class="text-slate-900 font-medium">{{ .Params.make }}</dd>
               </div>
-              <div class="flex justify-between py-2 border-b border-slate-100">
+              <div class="flex justify-between py-1.5 sm:py-2 border-b border-slate-100">
                 <dt class="text-slate-500">Model</dt>
                 <dd class="text-slate-900 font-medium">{{ .Params.model }}</dd>
               </div>
-              <div class="flex justify-between py-2 border-b border-slate-100">
+              <div class="flex justify-between py-1.5 sm:py-2 border-b border-slate-100">
                 <dt class="text-slate-500">Year</dt>
                 <dd class="text-slate-900 font-medium">{{ .Params.year }}</dd>
               </div>
-              <div class="flex justify-between py-2 border-b border-slate-100">
+              <div class="flex justify-between py-1.5 sm:py-2 border-b border-slate-100">
                 <dt class="text-slate-500">Body Type</dt>
                 <dd class="text-slate-900 font-medium">
-                  <a href="/body_types/{{ index .Params.body_types 0 | urlize }}/" class="hover:text-primary-600 transition-colors">
+                  <a href="{{ (printf "body_types/%s/" (index .Params.body_types 0 | urlize)) | relURL }}" class="hover:text-primary-600 transition-colors">
                     {{ index .Params.body_types 0 | title }}
                   </a>
                 </dd>
               </div>
               {{ if .Params.engine }}
-              <div class="flex justify-between py-2 border-b border-slate-100">
+              <div class="flex justify-between py-1.5 sm:py-2 border-b border-slate-100">
                 <dt class="text-slate-500">Engine</dt>
                 <dd class="text-slate-900 font-medium">{{ .Params.engine }}</dd>
               </div>
               {{ end }}
               {{ if .Params.horsepower }}
-              <div class="flex justify-between py-2 border-b border-slate-100">
+              <div class="flex justify-between py-1.5 sm:py-2 border-b border-slate-100">
                 <dt class="text-slate-500">Horsepower</dt>
                 <dd class="text-slate-900 font-medium">{{ .Params.horsepower }} HP</dd>
               </div>
               {{ end }}
               {{ if .Params.mileage }}
-              <div class="flex justify-between py-2">
+              <div class="flex justify-between py-1.5 sm:py-2">
                 <dt class="text-slate-500">Mileage</dt>
                 <dd class="text-slate-900 font-medium">{{ .Params.mileage }}</dd>
               </div>
@@ -262,24 +271,24 @@
           </div>
 
           <!-- Taxonomy Links -->
-          <div class="card p-6">
-            <h3 class="text-lg font-bold font-heading text-slate-900 mb-4">Categories</h3>
-            <div class="flex flex-wrap gap-2">
+          <div class="card p-4 sm:p-6">
+            <h3 class="text-base sm:text-lg font-bold font-heading text-slate-900 mb-3 sm:mb-4">Categories</h3>
+            <div class="flex flex-wrap gap-1.5 sm:gap-2">
               {{ range .Params.transmissions }}
               <a href="{{ (printf "transmissions/%s/" (. | urlize)) | relURL }}" 
-                 class="inline-flex items-center px-3 py-1.5 rounded-full text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
+                 class="inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
                 {{ . | title }}
               </a>
               {{ end }}
               {{ range .Params.body_types }}
               <a href="{{ (printf "body_types/%s/" (. | urlize)) | relURL }}" 
-                 class="inline-flex items-center px-3 py-1.5 rounded-full text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
+                 class="inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
                 {{ . | title }}
               </a>
               {{ end }}
               {{ range .Params.fuel_types }}
               <a href="{{ (printf "fuel_types/%s/" (. | urlize)) | relURL }}" 
-                 class="inline-flex items-center px-3 py-1.5 rounded-full text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
+                 class="inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
                 {{ . | title }}
               </a>
               {{ end }}
@@ -292,31 +301,35 @@
     <!-- Related Cars -->
     {{ $related := .Site.RegularPages.Related . | first 3 }}
     {{ with $related }}
-    <section class="mt-20">
-      <h2 class="text-2xl font-bold font-heading text-slate-900 mb-8">Similar Vehicles</h2>
-      <div class="grid md:grid-cols-3 gap-6">
+    <section class="mt-12 sm:mt-16 lg:mt-20">
+      <h2 class="text-xl sm:text-2xl font-bold font-heading text-slate-900 mb-4 sm:mb-6 lg:mb-8">Similar Vehicles</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {{ range . }}
         <a href="{{ .Permalink }}" class="group card card-hover overflow-hidden">
           <div class="aspect-[16/10] overflow-hidden">
             {{ if .Params.featured_image }}
             <img src="{{ .Params.featured_image }}" 
+                 srcset="{{ replace .Params.featured_image "w=800" "w=400" }} 400w, {{ .Params.featured_image }} 800w"
+                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                  alt="{{ .Params.make }} {{ .Params.model }}"
+                 loading="lazy"
+                 decoding="async"
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
             {{ else }}
             <div class="w-full h-full bg-slate-100 flex items-center justify-center">
-              <svg class="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-10 h-10 sm:w-12 sm:h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M8 17v-4m8 4v-4m-8 4H4a1 1 0 01-1-1v-2a1 1 0 011-1h1m12 4h4a1 1 0 001-1v-2a1 1 0 00-1-1h-1M5 9V7a2 2 0 012-2h10a2 2 0 012 2v2M5 9h14M5 9l1-4h12l1 4"/>
               </svg>
             </div>
             {{ end }}
           </div>
-          <div class="p-5">
-            <h3 class="font-bold font-heading text-slate-900 group-hover:text-primary-600 transition-colors">
+          <div class="p-4 sm:p-5">
+            <h3 class="font-bold font-heading text-slate-900 group-hover:text-primary-600 transition-colors text-sm sm:text-base line-clamp-1">
               {{ .Params.make }} {{ .Params.model }}
             </h3>
-            <p class="text-sm text-slate-500">{{ .Params.year }}</p>
-            <p class="mt-2 text-lg font-bold text-primary-600">
-              {{ site.Params.cars.currency_symbol }}{{ .Params.price_per_day }}<span class="text-sm font-normal text-slate-500">/day</span>
+            <p class="text-xs sm:text-sm text-slate-500">{{ .Params.year }}</p>
+            <p class="mt-2 text-base sm:text-lg font-bold text-primary-600">
+              {{ site.Params.cars.currency_symbol }}{{ .Params.price_per_day }}<span class="text-xs sm:text-sm font-normal text-slate-500">/day</span>
             </p>
           </div>
         </a>
@@ -326,9 +339,9 @@
     {{ end }}
 
     <!-- Back to Fleet -->
-    <div class="mt-12 text-center">
-      <a href="{{ "cars/" | relURL }}" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="mt-8 sm:mt-12 text-center">
+      <a href="{{ "cars/" | relURL }}" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors text-sm sm:text-base">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
         Back to Our Fleet
