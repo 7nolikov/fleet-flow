@@ -1,0 +1,49 @@
+{{ define "main" }}
+<section class="section pt-14">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Browse by {{ .Title }}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Filter our fleet by {{ .Title | lower }} to find the perfect vehicle for your needs.
+      </p>
+    </div>
+
+    <!-- Terms Grid -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {{ range .Pages }}
+      <a href="{{ .Permalink }}" 
+         class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+            </svg>
+          </div>
+          <span class="text-2xl font-bold text-primary-600">{{ len .Pages }}</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors">
+          {{ .Title }}
+        </h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          {{ len .Pages }} {{ if eq (len .Pages) 1 }}vehicle{{ else }}vehicles{{ end }} available
+        </p>
+      </a>
+      {{ end }}
+    </div>
+
+    <!-- Back Link -->
+    <div class="mt-12 text-center">
+      <a href="/cars/" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        View All Vehicles
+      </a>
+    </div>
+  </div>
+</section>
+{{ end }}
+

@@ -1,0 +1,30 @@
+{{ define "main" }}
+<article class="section pt-14">
+  <div class="container">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+        {{ .Title }}
+      </h1>
+      {{ with .Description }}
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+        {{ . }}
+      </p>
+      {{ end }}
+      
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        {{ .Content }}
+      </div>
+      
+      <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <a href="/" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+{{ end }}
+

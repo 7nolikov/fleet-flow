@@ -1,0 +1,61 @@
+# AutoRent - Car Rental Platform
+# Hugo Configuration
+
+baseURL = "https://7nolikov.github.io/fleet-flow/"
+languageCode = "en-us"
+title = "AutoRent - Premium Car Rentals"
+# Theme is loaded via Hugo modules - see config/_default/module.toml
+
+# Build settings
+enableRobotsTXT = true
+enableGitInfo = false
+summaryLength = 20
+
+# Taxonomies for car filtering
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  transmission = "transmissions"
+  body_type = "body_types"
+  fuel_type = "fuel_types"
+
+# Pagination
+[pagination]
+  pagerSize = 12
+
+# Output formats
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+
+# Markup settings
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "monokai"
+
+# Security settings for Hugo Pipes
+[security]
+  [security.funcs]
+    getenv = ["^HUGO_", "^CI$"]
+  [security.exec]
+    allow = ["^(dart-)?sass(-embedded)?$", "^go$", "^npx$", "^postcss$", "^tailwindcss$"]
+
+# Related content settings
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = true
+  [[related.indices]]
+    name = "body_type"
+    weight = 100
+  [[related.indices]]
+    name = "transmission"
+    weight = 80
+  [[related.indices]]
+    name = "tags"
+    weight = 60
+

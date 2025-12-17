@@ -1,0 +1,118 @@
+/* AutoRent Custom Styles */
+/* These styles extend Hugoplate's TailwindCSS base */
+
+/* Car Card Hover Effects */
+.car-card {
+  @apply transition-all duration-300;
+}
+
+.car-card:hover {
+  @apply -translate-y-1;
+}
+
+/* Price Highlight */
+.price-highlight {
+  @apply text-primary-600 font-bold;
+}
+
+/* Availability Badges */
+.badge-available {
+  @apply bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.badge-unavailable {
+  @apply bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+/* Filter Pills */
+.filter-pill {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
+         bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 
+         border border-gray-200 dark:border-gray-600 
+         hover:bg-primary-50 hover:border-primary-300 hover:text-primary-700 
+         transition-colors cursor-pointer;
+}
+
+.filter-pill.active {
+  @apply bg-primary-100 border-primary-300 text-primary-700;
+}
+
+/* Image Gallery */
+.gallery-main {
+  @apply aspect-[16/10] overflow-hidden rounded-lg;
+}
+
+.gallery-thumb {
+  @apply w-20 h-20 rounded-lg overflow-hidden cursor-pointer 
+         border-2 border-transparent hover:border-primary-500 
+         transition-colors;
+}
+
+.gallery-thumb.active {
+  @apply border-primary-500;
+}
+
+/* Spec Grid */
+.spec-item {
+  @apply bg-gray-50 dark:bg-gray-700 rounded-xl p-4 text-center;
+}
+
+.spec-icon {
+  @apply w-6 h-6 text-primary-600 mx-auto mb-2;
+}
+
+.spec-value {
+  @apply text-sm font-medium text-gray-900 dark:text-white;
+}
+
+.spec-label {
+  @apply text-xs text-gray-500;
+}
+
+/* CTA Button */
+.btn-book {
+  @apply w-full inline-flex items-center justify-center 
+         px-6 py-4 bg-primary-600 hover:bg-primary-700 
+         text-white text-lg font-semibold rounded-xl 
+         transition-colors shadow-lg hover:shadow-xl;
+}
+
+/* Feature List */
+.feature-item {
+  @apply flex items-center text-gray-700 dark:text-gray-300;
+}
+
+.feature-icon {
+  @apply w-5 h-5 text-green-500 mr-3 flex-shrink-0;
+}
+
+/* Related Cars Grid */
+.related-car {
+  @apply group bg-white dark:bg-gray-800 rounded-xl overflow-hidden 
+         shadow-lg hover:shadow-xl transition-shadow;
+}
+
+/* Animation Classes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Staggered animation delays for grid items */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+

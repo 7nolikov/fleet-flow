@@ -1,0 +1,50 @@
+# Site Parameters
+
+# Site metadata
+description = "AutoRent - Your trusted partner for premium car rentals. Browse our fleet of quality vehicles and book your perfect ride today."
+author = "AutoRent"
+logo = "/images/logo.png"
+logo_width = "160px"
+favicon = "/images/favicon.png"
+
+# Contact information
+email = "info@autorent.example.com"
+phone = "+1 (555) 123-4567"
+address = "123 Auto Drive, Car City, CC 12345"
+
+# Social links
+[[social]]
+  name = "facebook"
+  url = "https://facebook.com/autorent"
+[[social]]
+  name = "twitter"
+  url = "https://twitter.com/autorent"
+[[social]]
+  name = "instagram"
+  url = "https://instagram.com/autorent"
+
+# Footer settings
+copyright = "© {year} AutoRent. All rights reserved."
+
+# Car rental specific settings
+[cars]
+  currency = "EUR"
+  currency_symbol = "€"
+  default_image = "/images/cars/default-car.jpg"
+  booking_enabled = true
+
+# Payment settings (MVP: Cash only)
+[payment]
+  method = "cash"
+  title = "Cash Payment Only"
+  message = "Payment in cash on vehicle pickup. No card or online payment required."
+  icon = "banknotes"
+
+# Call to action
+[cta]
+  enable = true
+  title = "Ready to Hit the Road?"
+  description = "Browse our premium fleet and find your perfect rental car today."
+  button_text = "View Fleet"
+  button_url = "/cars/"
+

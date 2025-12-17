@@ -1,0 +1,27 @@
+# Hugo Module Configuration
+# Standalone setup - no external theme dependencies
+
+# Project mounts
+[[mounts]]
+  source = "assets"
+  target = "assets"
+
+[[mounts]]
+  source = "layouts"
+  target = "layouts"
+
+[[mounts]]
+  source = "static"
+  target = "static"
+
+[[mounts]]
+  source = "data"
+  target = "data"
+
+[[mounts]]
+  source = "content"
+  target = "content"
+
+[[mounts]]
+  source = "archetypes"
+  target = "archetypes"

@@ -1,0 +1,56 @@
+# Main Navigation Menu
+
+[[main]]
+  name = "Home"
+  url = "/"
+  weight = 10
+
+[[main]]
+  name = "Our Fleet"
+  url = "/cars/"
+  weight = 20
+
+[[main]]
+  name = "By Transmission"
+  url = "/transmissions/"
+  weight = 30
+  parent = "Our Fleet"
+
+[[main]]
+  name = "By Body Type"
+  url = "/body_types/"
+  weight = 40
+  parent = "Our Fleet"
+
+[[main]]
+  name = "By Fuel Type"
+  url = "/fuel_types/"
+  weight = 50
+  parent = "Our Fleet"
+
+[[main]]
+  name = "About"
+  url = "/about/"
+  weight = 60
+
+[[main]]
+  name = "Contact"
+  url = "/contact/"
+  weight = 70
+
+# Footer Menu
+[[footer]]
+  name = "Privacy Policy"
+  url = "/privacy/"
+  weight = 10
+
+[[footer]]
+  name = "Terms of Service"
+  url = "/terms/"
+  weight = 20
+
+[[footer]]
+  name = "FAQ"
+  url = "/faq/"
+  weight = 30
+
