@@ -31,10 +31,10 @@ available: true
 
 # Media - Ford Mustang specific images
 images:
-  - "https://images.unsplash.com/photo-1584345604476-8ec5f452d1b6?w=800&q=80"
   - "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80"
-  - "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80"
-featured_image: "https://images.unsplash.com/photo-1584345604476-8ec5f452d1b6?w=800&q=80"
+  - "https://images.unsplash.com/photo-1547744152-14d985cb937f?w=800&q=80"
+  - "https://images.unsplash.com/photo-1603553329474-99f95f35394f?w=800&q=80"
+featured_image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80"
 
 # Description
 description: "American muscle at its finest. The Ford Mustang GT delivers raw V8 power, iconic styling, and an unforgettable driving experience. This is what driving passion looks like."

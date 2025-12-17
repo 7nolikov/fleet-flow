@@ -31,10 +31,10 @@ available: true
 
 # Media - MINI Cooper specific images
 images:
-  - "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
-  - "https://images.unsplash.com/photo-1552642986-ccb41e7059e7?w=800&q=80"
-  - "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80"
-featured_image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+  - "https://images.unsplash.com/photo-1595787572501-5e7a12a3f3f9?w=800&q=80"
+  - "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80"
+  - "https://images.unsplash.com/photo-1562911791-c7a97b729ec5?w=800&q=80"
+featured_image: "https://images.unsplash.com/photo-1595787572501-5e7a12a3f3f9?w=800&q=80"
 
 # Description
 description: "Big thrills, small footprint. The MINI Cooper S packs 178 horsepower into an iconic package, delivering go-kart handling and British charm in equal measure."
