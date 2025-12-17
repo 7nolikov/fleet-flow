@@ -67,11 +67,10 @@
           <!-- Thumbnail Gallery -->
           {{ if $images }}
           <div class="p-3 sm:p-4 bg-slate-50 border-t border-slate-100">
-            <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory" id="thumbnail-gallery">
+            <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory">
               {{ range $index, $image := $images }}
-              <button type="button"
-                      data-full-image="{{ $image | safeHTMLAttr }}"
-                      class="thumbnail-btn flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-500 focus:border-primary-500 transition-colors focus:outline-none snap-start {{ if eq $index 0 }}border-primary-500{{ end }}">
+              <button onclick="document.getElementById('main-car-image').src='{{ $image }}'" 
+                      class="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-500 focus:border-primary-500 transition-colors focus:outline-none snap-start">
                 <img src="{{ replace $image "w=800" "w=200" }}" 
                      alt="View {{ $index | add 1 }}" 
                      loading="lazy"
@@ -81,41 +80,6 @@
               {{ end }}
             </div>
           </div>
-          <script>
-            (function() {
-              function initGallery() {
-                var mainImage = document.getElementById('main-car-image');
-                var thumbnails = document.querySelectorAll('.thumbnail-btn');
-                
-                if (!mainImage || thumbnails.length === 0) return;
-                
-                for (var i = 0; i < thumbnails.length; i++) {
-                  (function(btn) {
-                    btn.addEventListener('click', function(e) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      var fullImage = btn.getAttribute('data-full-image');
-                      if (fullImage) {
-                        mainImage.src = fullImage;
-                        for (var j = 0; j < thumbnails.length; j++) {
-                          thumbnails[j].classList.remove('border-primary-500');
-                          thumbnails[j].classList.add('border-transparent');
-                        }
-                        btn.classList.remove('border-transparent');
-                        btn.classList.add('border-primary-500');
-                      }
-                    });
-                  })(thumbnails[i]);
-                }
-              }
-              
-              if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initGallery);
-              } else {
-                initGallery();
-              }
-            })();
-          </script>
           {{ end }}
         </div>
 
