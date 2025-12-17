@@ -87,33 +87,42 @@
                 var mainImage = document.getElementById('main-car-image');
                 var thumbnails = document.querySelectorAll('.thumbnail-btn');
                 
+                console.log('Gallery init - mainImage:', mainImage, 'thumbnails:', thumbnails.length);
+                
                 if (!mainImage || thumbnails.length === 0) {
+                  console.log('Gallery init failed - missing elements');
                   return;
                 }
                 
-                thumbnails.forEach(function(btn) {
-                  btn.onclick = function(e) {
-                    e.preventDefault();
-                    var fullImage = this.dataset.fullImage;
-                    if (fullImage && mainImage) {
-                      mainImage.src = fullImage;
-                      // Update active state
-                      thumbnails.forEach(function(t) {
-                        t.classList.remove('border-primary-500');
-                        t.classList.add('border-transparent');
-                      });
-                      this.classList.remove('border-transparent');
-                      this.classList.add('border-primary-500');
-                    }
-                  };
-                });
+                for (var i = 0; i < thumbnails.length; i++) {
+                  (function(btn) {
+                    btn.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      var fullImage = btn.getAttribute('data-full-image');
+                      console.log('Thumbnail clicked, fullImage:', fullImage);
+                      if (fullImage) {
+                        mainImage.src = fullImage;
+                        console.log('Image src set to:', mainImage.src);
+                        // Update active state
+                        for (var j = 0; j < thumbnails.length; j++) {
+                          thumbnails[j].classList.remove('border-primary-500');
+                          thumbnails[j].classList.add('border-transparent');
+                        }
+                        btn.classList.remove('border-transparent');
+                        btn.classList.add('border-primary-500');
+                      }
+                    });
+                  })(thumbnails[i]);
+                }
+                console.log('Gallery initialized successfully');
               }
               
-              // Run immediately since script is after the elements
-              initGallery();
-              // Also run on DOMContentLoaded as fallback
+              // Run on DOMContentLoaded
               if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initGallery);
+              } else {
+                initGallery();
               }
             })();
           </script>
