@@ -87,12 +87,7 @@
                 var mainImage = document.getElementById('main-car-image');
                 var thumbnails = document.querySelectorAll('.thumbnail-btn');
                 
-                console.log('Gallery init - mainImage:', mainImage, 'thumbnails:', thumbnails.length);
-                
-                if (!mainImage || thumbnails.length === 0) {
-                  console.log('Gallery init failed - missing elements');
-                  return;
-                }
+                if (!mainImage || thumbnails.length === 0) return;
                 
                 for (var i = 0; i < thumbnails.length; i++) {
                   (function(btn) {
@@ -100,11 +95,8 @@
                       e.preventDefault();
                       e.stopPropagation();
                       var fullImage = btn.getAttribute('data-full-image');
-                      console.log('Thumbnail clicked, fullImage:', fullImage);
                       if (fullImage) {
                         mainImage.src = fullImage;
-                        console.log('Image src set to:', mainImage.src);
-                        // Update active state
                         for (var j = 0; j < thumbnails.length; j++) {
                           thumbnails[j].classList.remove('border-primary-500');
                           thumbnails[j].classList.add('border-transparent');
@@ -115,10 +107,8 @@
                     });
                   })(thumbnails[i]);
                 }
-                console.log('Gallery initialized successfully');
               }
               
-              // Run on DOMContentLoaded
               if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initGallery);
               } else {
