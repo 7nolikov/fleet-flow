@@ -94,7 +94,13 @@ We're fully GDPR compliant. Your personal data is protected and never shared wit
 
 Browse our carefully curated fleet and book your perfect rental car today. Questions? We're always happy to help.
 
-<div class="flex flex-wrap gap-4 mt-8">
-  <a href="/cars/" class="btn-primary">Browse Our Fleet</a>
-  <a href="/contact/" class="btn-secondary">Contact Us</a>
+<div class="flex flex-wrap gap-4 mt-8 not-prose">
+  <a href="../cars/" class="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-xl transition-colors">
+    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17h8M8 17v-4m8 4v-4m-8 4H4a1 1 0 01-1-1v-2a1 1 0 011-1h1m12 4h4a1 1 0 001-1v-2a1 1 0 00-1-1h-1M5 9V7a2 2 0 012-2h10a2 2 0 012 2v2M5 9h14M5 9l1-4h12l1 4"/></svg>
+    Browse Our Fleet
+  </a>
+  <a href="../contact/" class="inline-flex items-center px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl transition-colors">
+    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+    Contact Us
+  </a>
 </div>

@@ -266,19 +266,19 @@
             <h3 class="text-lg font-bold font-heading text-slate-900 mb-4">Categories</h3>
             <div class="flex flex-wrap gap-2">
               {{ range .Params.transmissions }}
-              <a href="/transmissions/{{ . | urlize }}/" 
+              <a href="{{ (printf "transmissions/%s/" (. | urlize)) | relURL }}" 
                  class="inline-flex items-center px-3 py-1.5 rounded-full text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
                 {{ . | title }}
               </a>
               {{ end }}
               {{ range .Params.body_types }}
-              <a href="/body_types/{{ . | urlize }}/" 
+              <a href="{{ (printf "body_types/%s/" (. | urlize)) | relURL }}" 
                  class="inline-flex items-center px-3 py-1.5 rounded-full text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
                 {{ . | title }}
               </a>
               {{ end }}
               {{ range .Params.fuel_types }}
-              <a href="/fuel_types/{{ . | urlize }}/" 
+              <a href="{{ (printf "fuel_types/%s/" (. | urlize)) | relURL }}" 
                  class="inline-flex items-center px-3 py-1.5 rounded-full text-sm bg-slate-100 text-slate-700 hover:bg-primary-100 hover:text-primary-700 transition-colors">
                 {{ . | title }}
               </a>
@@ -327,7 +327,7 @@
 
     <!-- Back to Fleet -->
     <div class="mt-12 text-center">
-      <a href="/cars/" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors">
+      <a href="{{ "cars/" | relURL }}" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
