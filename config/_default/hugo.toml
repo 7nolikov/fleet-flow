@@ -1,7 +1,7 @@
 # AutoRent - Car Rental Platform
 # Hugo Configuration
 
-baseURL = "https://7nolikov.github.io/fleet-flow/"
+baseURL = "https://7nolikov.dev/fleet-flow/"
 languageCode = "en-us"
 title = "AutoRent - Premium Car Rentals"
 # Theme is loaded via Hugo modules - see config/_default/module.toml
