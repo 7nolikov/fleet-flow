@@ -30,10 +30,7 @@
             {{ if $featuredImage }}
             <img id="main-car-image" 
                  src="{{ $featuredImage }}" 
-                 srcset="{{ replace $featuredImage "w=800" "w=400" }} 400w, {{ $featuredImage }} 800w, {{ replace $featuredImage "w=800" "w=1200" }} 1200w"
-                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 800px"
                  alt="{{ .Params.make }} {{ .Params.model }}"
-                 fetchpriority="high"
                  class="w-full h-full object-cover">
             {{ else }}
             <div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
@@ -66,44 +63,16 @@
 
           <!-- Thumbnail Gallery -->
           {{ if $images }}
-          <div class="p-3 sm:p-4 bg-slate-50 border-t border-slate-100">
-            <div id="thumbnail-container" class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory">
+          <div class="p-4 bg-slate-50 border-t border-slate-100">
+            <div class="flex gap-3 overflow-x-auto pb-2">
               {{ range $index, $image := $images }}
-              <button type="button" 
-                      data-fullsrc="{{ $image }}"
-                      class="gallery-thumb flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 {{ if eq $index 0 }}border-primary-500{{ else }}border-transparent{{ end }} hover:border-primary-500 focus:border-primary-500 transition-colors focus:outline-none snap-start">
-                <img src="{{ replace $image "w=800" "w=200" }}" 
-                     alt="View {{ $index | add 1 }}" 
-                     loading="lazy"
-                     decoding="async"
-                     class="w-full h-full object-cover">
+              <button onclick="document.getElementById('main-car-image').src='{{ $image }}'" 
+                      class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-500 focus:border-primary-500 transition-colors focus:outline-none">
+                <img src="{{ $image }}" alt="View {{ $index | add 1 }}" class="w-full h-full object-cover">
               </button>
               {{ end }}
             </div>
           </div>
-          <script>
-          (function(){
-            var mainImg = document.getElementById('main-car-image');
-            var thumbs = document.querySelectorAll('.gallery-thumb');
-            if (!mainImg || thumbs.length === 0) return;
-            
-            thumbs.forEach(function(thumb) {
-              thumb.addEventListener('click', function(e) {
-                e.preventDefault();
-                var newSrc = this.getAttribute('data-fullsrc');
-                if (newSrc) {
-                  mainImg.src = newSrc;
-                  thumbs.forEach(function(t) {
-                    t.classList.remove('border-primary-500');
-                    t.classList.add('border-transparent');
-                  });
-                  this.classList.remove('border-transparent');
-                  this.classList.add('border-primary-500');
-                }
-              });
-            });
-          })();
-          </script>
           {{ end }}
         </div>
 
