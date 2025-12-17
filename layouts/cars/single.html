@@ -70,7 +70,7 @@
             <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory" id="thumbnail-gallery">
               {{ range $index, $image := $images }}
               <button type="button"
-                      data-full-image="{{ $image }}"
+                      data-full-image="{{ $image | safeHTMLAttr }}"
                       class="thumbnail-btn flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-500 focus:border-primary-500 transition-colors focus:outline-none snap-start {{ if eq $index 0 }}border-primary-500{{ end }}">
                 <img src="{{ replace $image "w=800" "w=200" }}" 
                      alt="View {{ $index | add 1 }}" 
@@ -82,16 +82,24 @@
             </div>
           </div>
           <script>
-            (function() {
-              const mainImage = document.getElementById('main-car-image');
-              const thumbnails = document.querySelectorAll('.thumbnail-btn');
+            document.addEventListener('DOMContentLoaded', function() {
+              var mainImage = document.getElementById('main-car-image');
+              var thumbnails = document.querySelectorAll('.thumbnail-btn');
+              
+              if (!mainImage) {
+                console.error('Main image not found');
+                return;
+              }
               
               thumbnails.forEach(function(btn) {
                 btn.addEventListener('click', function(e) {
                   e.preventDefault();
-                  const fullImage = this.getAttribute('data-full-image');
-                  if (mainImage && fullImage) {
-                    mainImage.src = fullImage;
+                  e.stopPropagation();
+                  var fullImage = this.getAttribute('data-full-image');
+                  if (fullImage) {
+                    // Decode HTML entities if needed
+                    var decoded = fullImage.replace(/&amp;/g, '&');
+                    mainImage.src = decoded;
                     // Update active state
                     thumbnails.forEach(function(t) {
                       t.classList.remove('border-primary-500');
@@ -102,7 +110,7 @@
                   }
                 });
               });
-            })();
+            });
           </script>
           {{ end }}
         </div>
