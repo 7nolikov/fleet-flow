@@ -39,7 +39,7 @@
 
     <!-- Cars Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-      {{ range .Pages }}
+      {{ range .Paginator.Pages }}
       {{ if .Params.available }}
       <a href="{{ .Permalink }}" class="group block">
         <article class="card card-hover overflow-hidden h-full">
